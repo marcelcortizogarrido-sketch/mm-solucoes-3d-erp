@@ -1,0 +1,17 @@
+import { type NextRequest } from "next/server";
+
+import { updateSession } from "@/lib/supabase/middleware";
+
+export function proxy(request: NextRequest) {
+  return updateSession(request);
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Roda em todas as rotas, exceto arquivos estáticos e de imagem,
+     * para manter a sessão do Supabase sempre atualizada.
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
+};
