@@ -403,7 +403,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      apply_price_simulation: {
+        Args: { p_new_cost: number; p_new_price: number; p_product_id: string }
+        Returns: undefined
+      }
+      register_stock_movement: {
+        Args: {
+          p_destination_location_id?: string
+          p_notes?: string
+          p_origin_location_id?: string
+          p_product_id: string
+          p_quantity: number
+          p_reason?: string
+          p_type: Database["public"]["Enums"]["stock_movement_type"]
+        }
+        Returns: number
+      }
     }
     Enums: {
       stock_movement_type:
