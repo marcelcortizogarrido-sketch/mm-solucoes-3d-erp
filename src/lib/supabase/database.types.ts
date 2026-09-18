@@ -76,6 +76,146 @@ export type Database = {
         }
         Relationships: []
       }
+      consignment_partners: {
+        Row: {
+          active: boolean
+          address: string | null
+          cnpj: string | null
+          contact: string | null
+          created_at: string
+          id: string
+          location_id: string
+          name: string
+        }
+        Insert: {
+          active?: boolean
+          address?: string | null
+          cnpj?: string | null
+          contact?: string | null
+          created_at?: string
+          id?: string
+          location_id: string
+          name: string
+        }
+        Update: {
+          active?: boolean
+          address?: string | null
+          cnpj?: string | null
+          contact?: string | null
+          created_at?: string
+          id?: string
+          location_id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consignment_partners_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "stock_locations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consignment_shipment_items: {
+        Row: {
+          id: number
+          product_id: string
+          quantity: number
+          shipment_id: string
+        }
+        Insert: {
+          id?: never
+          product_id: string
+          quantity: number
+          shipment_id: string
+        }
+        Update: {
+          id?: never
+          product_id?: string
+          quantity?: number
+          shipment_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consignment_shipment_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "consignment_shipment_items_shipment_id_fkey"
+            columns: ["shipment_id"]
+            isOneToOne: false
+            referencedRelation: "consignment_shipments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consignment_shipments: {
+        Row: {
+          billing_amount: number | null
+          billing_nf_file_url: string | null
+          billing_nf_number: string | null
+          created_at: string
+          created_by: string | null
+          delivery_date: string
+          delivery_photo_url: string | null
+          id: string
+          nf_file_url: string | null
+          nf_number: string | null
+          notes: string | null
+          partner_id: string
+          romaneio_file_url: string | null
+        }
+        Insert: {
+          billing_amount?: number | null
+          billing_nf_file_url?: string | null
+          billing_nf_number?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivery_date: string
+          delivery_photo_url?: string | null
+          id?: string
+          nf_file_url?: string | null
+          nf_number?: string | null
+          notes?: string | null
+          partner_id: string
+          romaneio_file_url?: string | null
+        }
+        Update: {
+          billing_amount?: number | null
+          billing_nf_file_url?: string | null
+          billing_nf_number?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivery_date?: string
+          delivery_photo_url?: string | null
+          id?: string
+          nf_file_url?: string | null
+          nf_number?: string | null
+          notes?: string | null
+          partner_id?: string
+          romaneio_file_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consignment_shipments_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "consignment_shipments_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "consignment_partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       price_history: {
         Row: {
           changed_by: string | null
@@ -419,6 +559,29 @@ export type Database = {
       apply_price_simulation: {
         Args: { p_new_cost: number; p_new_price: number; p_product_id: string }
         Returns: undefined
+      }
+      create_consignment_partner: {
+        Args: {
+          p_address?: string
+          p_cnpj?: string
+          p_contact?: string
+          p_name: string
+        }
+        Returns: string
+      }
+      create_consignment_shipment: {
+        Args: {
+          p_delivery_date: string
+          p_delivery_photo_url?: string
+          p_items: Json
+          p_nf_file_url?: string
+          p_nf_number?: string
+          p_notes?: string
+          p_origin_location_id: string
+          p_partner_id: string
+          p_romaneio_file_url?: string
+        }
+        Returns: string
       }
       register_stock_movement: {
         Args: {
