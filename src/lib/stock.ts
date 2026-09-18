@@ -31,3 +31,9 @@ export function getMovementDirection(type: string): Direction {
 export function getMovementLabel(type: string) {
   return MOVEMENT_TYPES.find((m) => m.value === type)?.label ?? type;
 }
+
+export const LOCATION_TYPES = [
+  { value: "principal", label: "Principal" },
+  { value: "deposito", label: "Depósito" },
+  { value: "consignacao", label: "Consignação" },
+] as const;

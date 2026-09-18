@@ -13,6 +13,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { LOCATION_TYPES } from "@/lib/stock";
 import type { Tables } from "@/lib/supabase/database.types";
 import { createLocation, updateLocation, type FormState } from "./actions";
 
@@ -63,12 +71,18 @@ export function LocationFormDialog({
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="type">Tipo</Label>
-            <Input
-              id="type"
-              name="type"
-              defaultValue={location?.type ?? "principal"}
-              placeholder="principal, consignação, depósito..."
-            />
+            <Select name="type" defaultValue={location?.type ?? "principal"}>
+              <SelectTrigger id="type" className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {LOCATION_TYPES.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {state?.error && (

@@ -400,7 +400,20 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      consignment_summary: {
+        Row: {
+          current_quantity: number | null
+          location_id: string | null
+          location_name: string | null
+          product_id: string | null
+          product_name: string | null
+          returned_quantity: number | null
+          sent_quantity: number | null
+          sku: string | null
+          sold_quantity: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       apply_price_simulation: {

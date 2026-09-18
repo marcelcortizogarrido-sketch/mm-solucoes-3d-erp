@@ -5,6 +5,7 @@ import {
   Tags,
   Calculator,
   Boxes,
+  Handshake,
 } from "lucide-react";
 
 export type NavItem = {
@@ -19,6 +20,7 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/categorias", label: "Categorias", icon: Tags },
   { href: "/precificacao", label: "Precificação", icon: Calculator },
   { href: "/estoque", label: "Estoque", icon: Boxes },
+  { href: "/consignacao", label: "Consignação", icon: Handshake },
 ];
 
 export const MOBILE_NAV_ITEMS = NAV_ITEMS.slice(0, 4);
